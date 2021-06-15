@@ -7,11 +7,17 @@ import { LoginComponent } from './login/login.component';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
+import { FeedsComponent } from './feeds/feeds.component';
+import { HeaderComponent } from './header/header.component';
+import { ErrComponent } from './err/err.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    FeedsComponent,
+    HeaderComponent,
+    ErrComponent,
 
   ],
   imports: [
