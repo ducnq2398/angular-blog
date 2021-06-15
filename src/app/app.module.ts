@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { FeedsComponent } from './feeds/feeds.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrComponent } from './err/err.component';
+import {AngularFirestoreModule} from '@angular/fire/firestore'
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ErrComponent } from './err/err.component';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
