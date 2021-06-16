@@ -1,0 +1,12 @@
+.error.error-3 .error-title {
+  font-size: 8.7rem !important;
+}
+.er{
+  height: 100vh;
+}
+@media (min-width: 768px) {
+  .error.error-3 .error-title {
+    font-size: 15.7rem !important;
+    height: 100%;
+  }
+}

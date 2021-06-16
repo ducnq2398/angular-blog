@@ -14,7 +14,7 @@ export class AuthService {
     public afAuth: AngularFireAuth,
     public router: Router,
     public ngZone: NgZone
-  ) {}
+  ) { }
   userData: any;
 
   AuthLogin() {
@@ -25,25 +25,18 @@ export class AuthService {
           this.router.navigate(['feeds']);
         });
         this.userData = result.user;
+        localStorage.setItem('user', JSON.stringify(result.user));
       })
       .catch((error) => {
         window.alert(error);
       });
   }
 
-  get imageURL(): string {
-    return this.userData.photoURL !== null
-      ? this.userData.photoURL
-      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhQGrtC02UReTtVG8tzdr7k8WRnQL84RBd5Q&usqp=CAU';
-  }
-
-  get displayName(): string {
-    return this.userData.displayName !== null
-      ? this.userData.displayName
-      : 'Username';
-  }
-
-  Posts(): any {
+  Posts(){
     return this.afs.collection('posts').get();
+  }
+
+  addPost(data:any){
+    return this.afs.collection('posts').add(data);
   }
 }

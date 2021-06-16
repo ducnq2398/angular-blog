@@ -11,6 +11,7 @@ import { FeedsComponent } from './feeds/feeds.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrComponent } from './err/err.component';
 import {AngularFirestoreModule} from '@angular/fire/firestore'
+import { AuthService } from './shared/services/authService';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore'
     AngularFireAuthModule,
     AngularFirestoreModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

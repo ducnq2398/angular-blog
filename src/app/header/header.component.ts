@@ -9,6 +9,7 @@ import { AuthService } from '../shared/services/authService';
 export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
-  imageURL: string = this.authService.imageURL;
+  ngOnInit(): void {
+  }
+  user: any = JSON.parse(localStorage.getItem('user') || '{}');
 }
