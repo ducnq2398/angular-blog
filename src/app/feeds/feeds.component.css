@@ -27,8 +27,9 @@
 
 .img-preview{
   margin-bottom: 1rem;
+  width: 99%;
 }
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 724px) {
   .image-content {
     width: 90%;
     height: 90%;
