@@ -28,6 +28,9 @@ export class FeedsComponent implements OnInit {
       });
     });
   };
+  handleImg(){
+    document.getElementById('btn')?.click();
+  }
 
   handleFileSelect(event: any) {
     var files = event.target.files;

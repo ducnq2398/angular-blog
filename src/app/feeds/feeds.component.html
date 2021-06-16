@@ -7,7 +7,7 @@
           <img [src]="user.photoURL" alt="" class="h-75 align-self-end" />
         </div>
         <span class="text-muted font-weight-bold font-size-lg"
-        >What’s on your mind?</span
+          >What’s on your mind?</span
         >
       </div>
       <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
@@ -19,7 +19,7 @@
                   class="form-control border-0"
                   name="memo"
                   rows="2"
-                  placeholder="Typing message ..."
+                  placeholder="Typing message here ..."
                   id="kt_forms_widget_1_input"
                   [(ngModel)]="message"
                 ></textarea>
@@ -28,21 +28,28 @@
           </div>
         </div>
         <div class="border-top my-5"></div>
-        <img class="img-preview" [src]="url" alt="">
+        <img class="img-preview" [src]="url" alt="" />
         <div
-        id="kt_forms_widget_2_editor_toolbar"
-        class="ql-toolbar d-flex align-items-center justify-content-between"
+          id="kt_forms_widget_2_editor_toolbar"
+          class="ql-toolbar d-flex align-items-center justify-content-between"
         >
           <div class="mr-2">
-            <button class="btn btn-primary font-weight-bold" (click) = "handleUpload()" >Upload</button>
-            <button class="btn btn-icon btn-sm btn-hover-icon-primary ql-image">
-              <i class="flaticon2-photograph icon-ms"></i>
+            <button
+              class="btn btn-primary font-weight-bold"
+              (click)="handleUpload()"
+            >
+              Upload
+            </button>
+            <button class="btn btn-icon btn-sm btn-hover-icon-primary ql-image" (click) = "handleImg()" >
+              <i class="flaticon2-photograph icon-ml"></i>
             </button>
             <input
+              hidden
+              id="btn"
               type="file"
               accept="image/png, image/gif, image/jpeg, image/bmp, image/x-icon"
               class="ql-image"
-              (change) = "handleFileSelect($event)"
+              (change)="handleFileSelect($event)"
             />
           </div>
           <div class="">
