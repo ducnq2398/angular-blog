@@ -13,6 +13,8 @@ import { ErrComponent } from './err/err.component';
 import {AngularFirestoreModule} from '@angular/fire/firestore'
 import { AuthService } from './shared/services/authService';
 import { FooterComponent } from './footer/footer.component';
+import { CommentComponent } from './comment/comment.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     ErrComponent,
     FooterComponent,
+    CommentComponent,
+    ProfileComponent,
 
   ],
   imports: [
@@ -30,7 +34,8 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

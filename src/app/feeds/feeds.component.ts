@@ -1,5 +1,6 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AuthService } from '../shared/services/authService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feeds',
@@ -13,13 +14,18 @@ export class FeedsComponent implements OnInit {
   message: string = '';
   like: number = 0;
   comment: number = 0;
+  isComment: boolean = false;
   constructor(
     private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.getListPost();
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    if(localStorage.getItem('user') === null){
+      this.router.navigate(['err']);
+    }
   }
   getListPost = () => {
     this.authService.Posts().subscribe((res: any) => {
@@ -64,6 +70,9 @@ export class FeedsComponent implements OnInit {
 
   }
 
+  handleClickComment(){
+    this.isComment = !this.isComment
+  }
 
 
 

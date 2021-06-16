@@ -13,7 +13,7 @@ export class AuthService {
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
     public router: Router,
-    public ngZone: NgZone
+    public ngZone: NgZone,
   ) { }
   userData: any;
 
@@ -32,11 +32,15 @@ export class AuthService {
       });
   }
 
-  Posts(){
+  Posts() {
     return this.afs.collection('posts').get();
   }
 
-  addPost(data:any){
+  addPost(data: any) {
     return this.afs.collection('posts').add(data);
+  }
+
+  getComment(uid: string) {
+    return this.afs.collection('comments', ref => ref.where('postId', '==', uid)).valueChanges()
   }
 }
