@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { ErrComponent } from './err/err.component';
 import {AngularFirestoreModule} from '@angular/fire/firestore'
 import { AuthService } from './shared/services/authService';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AuthService } from './shared/services/authService';
     FeedsComponent,
     HeaderComponent,
     ErrComponent,
+    FooterComponent,
 
   ],
   imports: [
