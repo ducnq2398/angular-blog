@@ -1,6 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/services/authService';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Post } from '../shared/services/user';
 
 @Component({
   selector: 'app-feeds',
@@ -15,33 +17,52 @@ export class FeedsComponent implements OnInit {
   like: number = 0;
   comment: number = 0;
   isComment: boolean = false;
+  posts: Post[] = [];
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
-    this.getListPost();
+    this.authService.getPosts().subscribe(data => {
+      let array: Post[];
+      array = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...(e.payload.doc.data()) as object
+        } as Post;
+      })
+      this.posts = array.sort((a,b) => +new Date(b.timestamp.seconds) - +new Date(a.timestamp.seconds))
+    })
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
-    if(localStorage.getItem('user') === null){
+    if (localStorage.getItem('user') === null) {
       this.router.navigate(['err']);
     }
   }
   getListPost = () => {
     this.authService.Posts().subscribe((res: any) => {
       res.docs.forEach((doc: any) => {
-        this.listPosts.push(doc.data());
+        this.listPosts.push(doc);
+        this.listPosts.sort((a, b) => +new Date(b.data().timestamp.seconds - +new Date(a.data().timestamp.seconds)));
       });
     });
   };
-  handleImg(){
+
+  getPosts = () => {
+
+  }
+
+  handleImg() {
     document.getElementById('btn')?.click();
   }
 
   handleFileSelect(event: any) {
     var files = event.target.files;
     var file = files[0];
-    if (files && file) {
+    if (file.size > 1048576) {
+      this.toastr.error('Image size so large 😭');
+    } else if (files && file) {
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (event) => {
@@ -52,28 +73,45 @@ export class FeedsComponent implements OnInit {
 
   handleUpload() {
     var now = new Date();
+    let image: string = '';
+    if (this.url !== undefined) {
+      image = this.url;
+    }
     const data = {
+      Uid: this.user.uid,
       avatar: this.user.photoURL,
       comment: this.comment,
-      image: this.url,
+      image: image,
       like: this.like,
       name: this.user.displayName,
-      timestamp: new Date( now.getTime() + (now.getTimezoneOffset() * 60000)),
+      timestamp: new Date(now.getTime() + (now.getTimezoneOffset())),
       title: this.message
     }
-    this.authService.addPost(data).then(() => {
-      window.location.reload();
-    }).catch((e) => {
-      console.log(e);
-      alert('Upload faill');
-    })
+    if (this.message === '' && this.url === undefined) {
+      this.toastr.error('You can not upload story 😭')
+    } else {
+      this.authService.addPost(data).then(() => {
+        this.toastr.success('Upload successfully ❤️');
+        this.message='';
+        this.url='';
 
+      }).catch((e) => {
+        console.log(e);
+        this.toastr.error('Sorry, something went wrong 😭')
+      })
+    }
   }
 
-  handleClickComment(){
+  handleClickComment() {
     this.isComment = !this.isComment
   }
 
-
-
+  handleDeletePost(data: string) {
+    this.authService.deletePost(data).then(() => {
+      this.toastr.success('Delete successfully 🗑');
+    }).catch((err) => {
+      this.toastr.error('Sorry, something went wrong 😭')
+      console.log(err)
+    });
+  }
 }

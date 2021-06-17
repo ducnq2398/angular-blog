@@ -3,11 +3,11 @@
   <div class="card card-custom gutter-b">
     <div class="card-body">
       <div class="d-flex align-items-center">
-        <div class="symbol symbol-40 symbol-light-success mr-5">
+        <div class="symbol symbol-40 symbol-light-success mr-2">
           <img [src]="user.photoURL" alt="" class="h-75 align-self-end" />
         </div>
         <span class="text-muted font-weight-bold font-size-lg"
-          >What’s on your mind, {{ user.displayName }} 💕🥰😘😛😝😜🤪?</span
+          >What’s on your mind, {{ user.displayName }}? 💕</span
         >
       </div>
       <form id="kt_forms_widget_2_form" class="pt-10 ql-quil ql-quil-plain">
@@ -27,7 +27,7 @@
             </form>
           </div>
         </div>
-        <div class="border-top my-5"></div>
+        <div class="border-top"></div>
         <img class="img-preview" [src]="url" alt="" />
         <div
           id="kt_forms_widget_2_editor_toolbar"
@@ -43,7 +43,7 @@
             <button
               class="btn btn-icon btn-sm btn-hover-icon-primary ql-image"
               (click)="handleImg()"
-              style="margin-left: 1rem;"
+              style="margin-left: 1rem"
             >
               <i class="flaticon2-photograph icon-ml"></i>
             </button>
@@ -51,15 +51,12 @@
               hidden
               id="btn"
               type="file"
-              accept="image/png, image/gif, image/jpeg, image/bmp, image/x-icon, image/heic"
+              accept="image/png, image/gif, image/jpeg, image/bmp, image/x-icon"
               class="ql-image"
               (change)="handleFileSelect($event)"
             />
           </div>
           <div class="">
-            <span class="btn btn-icon btn-sm btn-hover-icon-primary">
-              <i class="flaticon2-clip-symbol icon-ms"></i>
-            </span>
             <span class="btn btn-icon btn-sm btn-hover-icon-primary">
               <i class="flaticon2-pin icon-ms"></i>
             </span>
@@ -68,15 +65,14 @@
       </form>
     </div>
   </div>
-  <div *ngFor="let post of listPosts">
+  <div *ngFor="let post of posts">
     <div class="card-body body">
       <div class="d-flex align-items-center">
-        <div class="symbol symbol-40 symbol-light-success mr-5">
+        <div class="symbol symbol-40 symbol-light-success mr-3">
           <img src="{{ post.avatar }}" class="h-75 align-self-end" alt="" />
         </div>
         <div class="d-flex flex-column flex-grow-1">
           <a
-            href="#"
             class="
               text-dark-75 text-hover-primary
               mb-1
@@ -85,18 +81,56 @@
             >{{ post.name }}</a
           >
           <span class="text-muted font-weight-bold">{{
-            post.timestamp.seconds * 1000 | date
+            post.timestamp.seconds * 1000 | date: "MMMM dd, yyyy HH:mm"
           }}</span>
         </div>
+        <div class="" *ngIf="post.Uid === user.uid">
+          <span class="btn btn-icon btn-sm btn-hover-icon-primary">
+            <i class="flaticon-edit icon-ms"></i>
+          </span>
+          <span class="btn btn-icon btn-sm btn-hover-icon-primary" (click) = "handleDeletePost(post.id)">
+            <i class="flaticon-delete-1 icon-ms"></i>
+          </span>
+        </div>
       </div>
-      <div class="pt-5">
-        <p class="text-dark-75 font-size-lg font-weight-normal mb-2">
+      <div>
+        <p class="text-dark-75 font-size-lg font-weight-normal mt-2">
           {{ post.title }}
         </p>
         <img src="{{ post.image }}" alt="" class="image-content" />
 
-        <div class="d-flex align-items-center cmt" (click)="handleClickComment()">
-          <span class="svg-icon svg-icon-md svg-icon-dark-25 pr-2">
+        <div class="d-flex align-items-center cmt">
+
+          <span
+            class="
+              svg-icon svg-icon-md svg-icon-dark-25
+              pr-1
+              lk
+              btn-hover-icon-primary
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="24px"
+              height="24px"
+              viewBox="0 0 24 24"
+              version="1.1"
+            >
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <polygon points="0 0 24 0 24 24 0 24" />
+                <path
+                  d="M16.5,4.5 C14.8905,4.5 13.00825,6.32463215 12,7.5 C10.99175,6.32463215 9.1095,4.5 7.5,4.5 C4.651,4.5 3,6.72217984 3,9.55040872 C3,12.6834696 6,16 12,19.5 C18,16 21,12.75 21,9.75 C21,6.92177112 19.349,4.5 16.5,4.5 Z"
+                  fill="#f64e60"
+                  fill-rule="nonzero"
+                />
+              </g>
+            </svg> </span
+          >{{ post.like }}
+          <span
+            class="svg-icon svg-icon-md svg-icon-dark-25 pr-2 i"
+            (click)="handleClickComment()"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -120,25 +154,6 @@
             </svg> </span
           >{{ post.comment }}
 
-          <span class="svg-icon svg-icon-md svg-icon-dark-25 pr-1 lk ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              width="24px"
-              height="24px"
-              viewBox="0 0 24 24"
-              version="1.1"
-            >
-              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <polygon points="0 0 24 0 24 24 0 24" />
-                <path
-                  d="M16.5,4.5 C14.8905,4.5 13.00825,6.32463215 12,7.5 C10.99175,6.32463215 9.1095,4.5 7.5,4.5 C4.651,4.5 3,6.72217984 3,9.55040872 C3,12.6834696 6,16 12,19.5 C18,16 21,12.75 21,9.75 C21,6.92177112 19.349,4.5 16.5,4.5 Z"
-                  fill="#000000"
-                  fill-rule="nonzero"
-                />
-              </g>
-            </svg> </span
-          >{{ post.like }}
         </div>
       </div>
       <app-comment *ngIf="isComment"></app-comment>

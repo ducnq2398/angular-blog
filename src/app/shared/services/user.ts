@@ -5,3 +5,15 @@ export interface User {
   photoURL: string;
   emailVerified: boolean;
 }
+
+export interface Post{
+  id: string;
+  Uid: string;
+  avatar: string;
+  comment: number;
+  image: string;
+  like: number;
+  name: string;
+  timestamp: any;
+  title: string;
+}

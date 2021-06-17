@@ -11,6 +11,9 @@
   margin-left: 0.5rem;
 }
 
+.i:hover{
+  cursor: pointer;
+}
 .body {
   background: white;
   border-radius: 5px;

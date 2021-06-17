@@ -15,8 +15,7 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone,
   ) { }
-  userData: any;
-
+  data: any[] = [];
   AuthLogin() {
     return this.afAuth
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
@@ -24,7 +23,6 @@ export class AuthService {
         this.ngZone.run(() => {
           this.router.navigate(['feeds']);
         });
-        this.userData = result.user;
         localStorage.setItem('user', JSON.stringify(result.user));
       })
       .catch((error) => {
@@ -36,11 +34,19 @@ export class AuthService {
     return this.afs.collection('posts').get();
   }
 
+  getPosts(){
+    return this.afs.collection('posts').snapshotChanges();
+  }
+
   addPost(data: any) {
     return this.afs.collection('posts').add(data);
   }
 
   getComment(uid: string) {
     return this.afs.collection('comments', ref => ref.where('postId', '==', uid)).valueChanges()
+  }
+
+  deletePost(data:string){
+    return this.afs.collection('posts').doc(data).delete();
   }
 }

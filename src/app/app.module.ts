@@ -15,6 +15,9 @@ import { AuthService } from './shared/services/authService';
 import { FooterComponent } from './footer/footer.component';
 import { CommentComponent } from './comment/comment.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,6 @@ import { ProfileComponent } from './profile/profile.component';
     FooterComponent,
     CommentComponent,
     ProfileComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,9 @@ import { ProfileComponent } from './profile/profile.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-
+    NgbModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
