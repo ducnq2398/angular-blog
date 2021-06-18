@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/services/authService';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Post } from '../shared/services/user';
+import { Comment, Post } from '../shared/services/user';
 
 @Component({
   selector: 'app-feeds',
@@ -18,6 +18,8 @@ export class FeedsComponent implements OnInit {
   comment: number = 0;
   isComment: boolean = false;
   posts: Post[] = [];
+  inputValue = '';
+  commentList: Comment[] = [];
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -25,6 +27,16 @@ export class FeedsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.authService.getAllComment().subscribe(data => {
+      let a: Comment[];
+      a = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data() as object
+        } as Comment
+      })
+      this.commentList = a.sort((a,b) => +new Date(b.datetime.seconds) - +new Date(a.datetime.scends));
+    })
     this.authService.getPosts().subscribe(data => {
       let array: Post[];
       array = data.map(e => {
@@ -40,18 +52,7 @@ export class FeedsComponent implements OnInit {
       this.router.navigate(['err']);
     }
   }
-  getListPost = () => {
-    this.authService.Posts().subscribe((res: any) => {
-      res.docs.forEach((doc: any) => {
-        this.listPosts.push(doc);
-        this.listPosts.sort((a, b) => +new Date(b.data().timestamp.seconds - +new Date(a.data().timestamp.seconds)));
-      });
-    });
-  };
 
-  getPosts = () => {
-
-  }
 
   handleImg() {
     document.getElementById('btn')?.click();

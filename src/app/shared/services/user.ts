@@ -17,3 +17,12 @@ export interface Post{
   timestamp: any;
   title: string;
 }
+
+export interface Comment{
+  id: string;
+  postId: string;
+  name: string;
+  message: string;
+  avt: string;
+  datetime: any
+}

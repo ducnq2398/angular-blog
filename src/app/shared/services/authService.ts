@@ -30,9 +30,6 @@ export class AuthService {
       });
   }
 
-  Posts() {
-    return this.afs.collection('posts').get();
-  }
 
   getPosts(){
     return this.afs.collection('posts').snapshotChanges();
@@ -43,10 +40,14 @@ export class AuthService {
   }
 
   getComment(uid: string) {
-    return this.afs.collection('comments', ref => ref.where('postId', '==', uid)).valueChanges()
+    const ref =  this.afs.collection('comments').doc(uid);
   }
 
   deletePost(data:string){
     return this.afs.collection('posts').doc(data).delete();
+  }
+
+  getAllComment(){
+    return this.afs.collection('comments').snapshotChanges();
   }
 }
